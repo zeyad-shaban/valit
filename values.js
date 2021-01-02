@@ -1,9 +1,15 @@
 module.exports = {
+    // common
     string: 'string',
     number: 'number',
-    isRequired: 'isRequired',
+    boolean: 'boolean',
+
+    // complex
     function: 'function',
     object: 'object',
-    isRequired: true,
+    
+
+    // custom
+    isRequired: 'isRequired',
     notRequired: false,
 };
