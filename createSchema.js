@@ -11,7 +11,7 @@ const createSchema = (
         value,
         isRequired,
         options: {
-            label: options.label.toString(),
+            label: options.label && options.label.toString() || null,
             min: options.min,
             max: options.max,
         },
