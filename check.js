@@ -25,7 +25,7 @@ const check = (data, inputSchema) => {
         // -----------END check values-----------
 
         // -----------Check min & max-----------
-        if (typeof value === values.number) {
+        if (schema.value === values.number) {
             if (value < schema.options.min)
                 elemErrors.push(
                     `${schema.options.label} must be at least ${schema.options.min}`
@@ -34,7 +34,7 @@ const check = (data, inputSchema) => {
                 elemErrors.push(
                     `${schema.options.label} must be less than ${schema.options.max}`
                 );
-        } else if (typeof value === values.string) {
+        } else if (schema.value === values.string) {
             if (value.length < schema.options.min)
                 elemErrors.push(
                     `${schema.options.label} must be at least ${schema.options.min} character`
