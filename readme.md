@@ -9,4 +9,7 @@ npm i valit
 # Resources
 
 *   [Documentation](https://valit.netlify.app/)
-*   [Valit NPMJS](https://www.npmjs.com/package/valit)
+*   [Github](https://github.com/zeyadShapan/valit)
+*   [Valit on npmjs](https://www.npmjs.com/package/valit)
+
+If you have any ideas to improve the app feel free to open an issue in the github page or contact me directly zeyadshapan2004@gmail.com
