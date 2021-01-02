@@ -1,6 +1,6 @@
 {
   "name": "valit",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "An optimized version of Joi, provides a very simple input validation by creating a schema and comparing it to an object you give. Works exactly as Joi",
   "main": "index.js",
   "scripts": {
