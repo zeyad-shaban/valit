@@ -5,6 +5,7 @@ const createSchema = (
         label: null,
         min: Number.NEGATIVE_INFINITY,
         max: Number.POSITIVE_INFINITY,
+        email: false
     }
 ) => {
     return {
@@ -14,6 +15,7 @@ const createSchema = (
             label: options.label && options.label.toString() || null,
             min: options.min,
             max: options.max,
+            email: options.email
         },
     };
 };

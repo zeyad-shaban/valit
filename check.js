@@ -1,5 +1,11 @@
 const values = require('./values');
 
+
+const validateEmail = email => {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+};
+
 const check = (data, inputSchema) => {
     const errors = {};
 
@@ -45,6 +51,14 @@ const check = (data, inputSchema) => {
                 );
         }
         // -----------END Check min & max-----------
+
+        // ----------check emails-----------
+        if (schema.options.email && typeof value === values.string) {
+            if (!validateEmail(value)) elemErrors.push(`${schema.options.label} must be a valid email address`)
+        }
+        // ----------END check emails-----------
+
+        // todo check regexp
 
         // *PUSH ERRORS
         if (elemErrors.length > 0) errors[elem] = elemErrors;
