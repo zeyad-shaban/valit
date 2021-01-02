@@ -3,5 +3,7 @@ module.exports = {
     number: 'number',
     isRequired: 'isRequired',
     function: 'function',
-    object: 'object'
+    object: 'object',
+    isRequired: true,
+    notRequired: false,
 };
