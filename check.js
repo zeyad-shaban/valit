@@ -43,11 +43,11 @@ const check = (data, inputSchema) => {
         } else if (schema.value === values.string) {
             if (value.length < schema.options.min)
                 elemErrors.push(
-                    `${schema.options.label} must be at least ${schema.options.min} character`
+                    `${schema.options.label} must be at least ${schema.options.min} characters`
                 );
             if (value.length > schema.options.max)
                 elemErrors.push(
-                    `${schema.options.label} must be less than ${schema.options.max} character`
+                    `${schema.options.label} must be less than ${schema.options.max} characters`
                 );
         }
         // -----------END Check min & max-----------
