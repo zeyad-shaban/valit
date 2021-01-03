@@ -54,7 +54,7 @@ const data = {
 const errors = valit.check(data, schema)
 ```
 
-valit.check will return an object of all errors found, the key will be the name of the field and the value will be an array of all errors found for that specific field.
+```valit.check``` will return an object of all errors found, the key will be the name of the field and the value will be an array of all errors found for that specific field.
 
 So in this example errors will look like this
 
