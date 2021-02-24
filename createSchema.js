@@ -1,21 +1,20 @@
 const createSchema = (
-    value,
+    dataType,
     isRequired = false,
     options = {
         label: null,
         min: Number.NEGATIVE_INFINITY,
         max: Number.POSITIVE_INFINITY,
-        email: false
+        email: false,
+        match: false
     }
 ) => {
     return {
-        value,
+        dataType,
         isRequired,
         options: {
+            ...options,
             label: options.label && options.label.toString() || null,
-            min: options.min,
-            max: options.max,
-            email: options.email
         },
     };
 };

@@ -18,7 +18,7 @@ const valit = require('valit')
 const schema = {
     username: valit.createSchema(valit.string, valit.isRequired, {
         min: 5,
-        max: 2,
+        max: 25,
         label: 'Username'
     }),
     email: valit.createSchema(valit.string, valit.isRequired, {
@@ -28,7 +28,10 @@ const schema = {
         min: 10,
         max: 100
     }),
-    password: valit.createSchema(valit.string, valit.isRequired),
+    password1: valit.createSchema(valit.string, valit.isRequired, {
+        match: 'password2'
+    }),
+    password2: valit.createSchema(valit.string, valit.isRequired),
 };
 ```
 the first param in valit.createSchema is the data type of that field. __required__
@@ -38,7 +41,7 @@ the second detremines whether the field is required or not, ___default of false_
 * ```valit.isRequired``` ```valit.notRequired```
 
 the third is an optional object of extra options
-* ```min``` ```max``` ```label``` ```email```
+* ```min``` ```max``` ```label``` ```email``` ```match```
 
 #### 2. Then get the data you want to validate
 ```js
@@ -46,7 +49,8 @@ const data = {
     username: 'hmm',
     email: 'officialvalit@gmail.com',
     age: -17,
-    password: 1234,
+    password1: 1234,
+    password2: 'myPassword'
 };
 ```
 #### 3. Finally get errors
@@ -60,10 +64,16 @@ So in this example errors will look like this
 
 ```js
 {
-    username: ['Username must be at least 5 characters'],
-    age: ['age must be at least 10'],
-    password: ['password must be a string']
+    username: [ 'Username must be at least 5 characters' ],
+    age: [ 'age must be at least 10' ],
+    password1: [ 'password1 must be a string', 'password1 must match password2' ]
 }
+```
+
+If you want a single error from each field, instead of an array of errors, just set third param (firstErr) to true, default is false
+
+```js
+const errors = valit.check(data, schema, true)
 ```
 
 
@@ -72,4 +82,4 @@ So in this example errors will look like this
 *   [Github](https://github.com/zeyadShapan/valit)
 *   [Valit on npmjs](https://www.npmjs.com/package/valit)
 
-If you have any ideas to improve the app feel free to open an issue on the github page or contact us directly officialvalit@gmail.com
+If you have any ideas to improve the app feel free to open an issue on the github page.

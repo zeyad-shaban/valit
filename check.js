@@ -6,62 +6,64 @@ const validateEmail = email => {
     return re.test(String(email).toLowerCase());
 };
 
-const check = (data, inputSchema) => {
+const check = (data, schema, firstErr = false) => {
     const errors = {};
 
-    for (elem in inputSchema) {
-        const elemErrors = [];
-        const value = data[elem];
-        const schema = inputSchema[elem];
-        if (!schema.options.label) schema.options.label = elem;
+    for (field in schema) {
+        const fieldErrs = [];
 
-        // -----------Is Required Checking-----------
-        if (schema.isRequired && !value && value !== 0) {
-            elemErrors.push(`${schema.options.label} is required`);
-            errors[elem] = elemErrors;
+        const value = data[field];
+        const { dataType, isRequired, options } = schema[field];
+        if (!options.label) options.label = field;
+
+        // Check Is Required
+        if (isRequired && !value && value !== 0) {
+            fieldErrs.push(`${options.label} is required`);
+            errors[field] = fieldErrs;
             continue;
         } else if (value === false) continue;
-        // -----------END is required checking-----------
 
-        // -----------check values-----------
-        if (typeof value !== schema.value)
-            elemErrors.push(
-                `${schema.options.label} must be a ${schema.value}`
+        // Check values
+        if (typeof value !== dataType)
+            fieldErrs.push(
+                `${options.label} must be a ${dataType}`
             );
-        // -----------END check values-----------
 
-        // -----------Check min & max-----------
-        if (schema.value === values.number) {
-            if (value < schema.options.min)
-                elemErrors.push(
-                    `${schema.options.label} must be at least ${schema.options.min}`
+
+        // Check min & max
+        if (dataType === values.number) {
+            if (value < options.min)
+                fieldErrs.push(
+                    `${options.label} must be at least ${options.min}`
                 );
-            if (value > schema.options.max)
-                elemErrors.push(
-                    `${schema.options.label} must be less than ${schema.options.max}`
+            if (value > options.max)
+                fieldErrs.push(
+                    `${options.label} must be less than ${options.max}`
                 );
-        } else if (schema.value === values.string) {
-            if (value.length < schema.options.min)
-                elemErrors.push(
-                    `${schema.options.label} must be at least ${schema.options.min} characters`
+        } else if (dataType === values.string) {
+            if (value.length < options.min)
+                fieldErrs.push(
+                    `${options.label} must be at least ${options.min} characters`
                 );
-            if (value.length > schema.options.max)
-                elemErrors.push(
-                    `${schema.options.label} must be less than ${schema.options.max} characters`
+            if (value.length > options.max)
+                fieldErrs.push(
+                    `${options.label} must be less than ${options.max} characters`
                 );
         }
-        // -----------END Check min & max-----------
 
-        // ----------check emails-----------
-        if (schema.options.email && typeof value === values.string) {
-            if (!validateEmail(value)) elemErrors.push(`${schema.options.label} must be a valid email address`)
-        }
-        // ----------END check emails-----------
+        // Check email
+        if (options.email && typeof value === values.string && !validateEmail(value))
+            fieldErrs.push(`${options.label} must be a valid email address`);
+
+        // Check match
+        if (options.match && value !== data[options.match])
+            fieldErrs.push(`${options.label} must match ${options.match}`);
+
 
         // todo check regexp
 
         // *PUSH ERRORS
-        if (elemErrors.length > 0) errors[elem] = elemErrors;
+        if (fieldErrs.length > 0) errors[field] = firstErr ? fieldErrs[0] : fieldErrs;
     }
     return errors;
 };
