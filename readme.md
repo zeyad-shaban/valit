@@ -79,7 +79,7 @@ const errors = valit.check(data, schema, true)
 
 # Resources
 
-*   [Github](https://github.com/zeyadShapan/valit)
+*   [Github](https://github.com/zeyad-shaban/valit)
 *   [Valit on npmjs](https://www.npmjs.com/package/valit)
 
 If you have any ideas to improve the app feel free to open an issue on the github page.
