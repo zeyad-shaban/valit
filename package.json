@@ -1,7 +1,7 @@
 {
   "name": "valit",
   "version": "1.4.1",
-  "description": "An optimized version of Joi, provides a very simple input validation by creating a schema and comparing it to an object you give. Works exactly as Joi",
+  "description": "An optimized version of Joi. A very simple input validation by creating a schema and comparing it to the given data.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,7 +11,16 @@
     "validation",
     "validate",
     "input validation",
-    "optimized"
+    "optimized",
+    "schema",
+    "validator",
+    "check",
+    "checker",
+    "data",
+    "error",
+    "invalid",
+    "yup",
+    "superstruct"
   ],
   "homepage": "https://github.com/zeyad-shaban/valit#readme",
   "author": "zeyadshaban",
