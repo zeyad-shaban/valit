@@ -1,3 +1,4 @@
+const capFirstLetter = require('./utils/capFirstLetter');
 const values = require('./values');
 
 
@@ -6,22 +7,26 @@ const validateEmail = email => {
     return re.test(String(email).toLowerCase());
 };
 
-const check = (data, schema, firstErr = false) => {
+const validate = (data, schema, returnAllErrors = false) => {
     const errors = {};
 
-    for (field in schema) {
-        const fieldErrs = [];
+    const pushError = (fieldErrs, field) => {
+        if (fieldErrs.length > 0) errors[field] = returnAllErrors ? fieldErrs : fieldErrs[0];
+    };
 
+    for (const field in schema) {
+        const fieldErrs = [];
         const value = data[field];
-        const { dataType, isRequired, options } = schema[field];
-        if (!options.label) options.label = field;
+        const { dataType, options } = schema[field];
+        if (!options.label) options.label = capFirstLetter(field);
 
         // Check Is Required
-        if (isRequired && !value && value !== 0) {
+        if (options.required && !value && value !== 0) {
             fieldErrs.push(`${options.label} is required`);
-            errors[field] = fieldErrs;
+            pushError(fieldErrs, field);
             continue;
-        } else if (value === false) continue;
+        } else if (value == null) continue;
+
 
         // Check values
         if (typeof value !== dataType)
@@ -51,21 +56,20 @@ const check = (data, schema, firstErr = false) => {
                 );
         }
 
+
         // Check email
         if (options.email && typeof value === values.string && !validateEmail(value))
             fieldErrs.push(`${options.label} must be a valid email address`);
+
 
         // Check match
         if (options.match && value !== data[options.match])
             fieldErrs.push(`${options.label} must match ${options.match}`);
 
 
-        // todo check regexp
-
-        // *PUSH ERRORS
-        if (fieldErrs.length > 0) errors[field] = firstErr ? fieldErrs[0] : fieldErrs;
+        pushError(fieldErrs, field);
     }
     return errors;
 };
 
-module.exports = check;
+module.exports = validate;

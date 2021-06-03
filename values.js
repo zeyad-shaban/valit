@@ -7,9 +7,4 @@ module.exports = {
     // complex
     function: 'function',
     object: 'object',
-    
-
-    // custom
-    isRequired: 'isRequired',
-    notRequired: false,
 };

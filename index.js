@@ -1,7 +1,7 @@
-const check = require('./check');
+const validate = require('./validate');
 const values = require('./values');
-const createSchema = require('./createSchema');
+const createField = require('./createField');
 
-const valit = { check, ...values, createSchema };
+const valit = { validate, ...values, createField };
 
 module.exports = valit;

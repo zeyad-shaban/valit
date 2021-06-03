@@ -16,64 +16,79 @@ const valit = require('valit')
 #### 1. First create your schema
 ```js
 const schema = {
-    username: valit.createSchema(valit.string, valit.isRequired, {
+    username: valit.createField(valit.string, {
+        required: true,
         min: 5,
         max: 25,
         label: 'Username'
     }),
-    email: valit.createSchema(valit.string, valit.isRequired, {
+    email: valit.createField(valit.string, {
+        required: true,
         email: true
     }),
-    age: valit.createSchema(valit.number, valit.notRequired, {
+    age: valit.createField(valit.number, {
         min: 10,
-        max: 100
+        max: 100,
     }),
-    password1: valit.createSchema(valit.string, valit.isRequired, {
-        match: 'password2'
+    password1: valit.createField(valit.string, {
+        required: true,
+        match: 'password2',
     }),
-    password2: valit.createSchema(valit.string, valit.isRequired),
+    password2: valit.createField(valit.string, { required: true }),
 };
 ```
-the first param in valit.createSchema is the data type of that field. __required__
+the first parameter in valit.createField is the data type of that field. __required__
 * ```valit.string``` ```valit.number``` ```valit.boolean``` ```valit.object``` ```valit.function```
 
 the second detremines whether the field is required or not, ___default of false___.
 * ```valit.isRequired``` ```valit.notRequired```
 
-the third is an optional object of extra options
-* ```min``` ```max``` ```label``` ```email``` ```match```
+the second parameter is an object of extra options
+* ```required``` ```min``` ```max``` ```label``` ```email``` ```match```
+<small>*Note: ```required``` and ```email``` default value is false*</small>
 
-#### 2. Then get the data you want to validate
+#### 2. Get the data you want to validate
 ```js
 const data = {
-    username: 'hmm',
     email: 'officialvalit@gmail.com',
     age: -17,
     password1: 1234,
     password2: 'myPassword'
 };
 ```
-#### 3. Finally get errors
+#### 3. Validate and get errors
 ```js
-const errors = valit.check(data, schema)
+const errors = valit.validate(data, schema)
 ```
 
-```valit.check``` will return an object of all errors found, the key will be the name of the field and the value will be an array of all errors found for that specific field.
+```valit.validate``` will return an object of all errors found, the key will be the name of the field and the value will be the first error found for that field.
 
 So in this example errors will look like this
 
 ```js
 {
-    username: [ 'Username must be at least 5 characters' ],
-    age: [ 'age must be at least 10' ],
-    password1: [ 'password1 must be a string', 'password1 must match password2' ]
+  username: 'Username is required',
+  age: 'Age must be at least 10',
+  password1: 'Password1 must be a string'
 }
 ```
 
-If you want a single error from each field, instead of an array of errors, just set third param (firstErr) to true, default is false
+There is a third parameter for ```valit.validate```:  ```returnAllErrors``` type: boolean, default: false, if set to true it will return all errors found for that field in an array.
+
+so if we did
 
 ```js
-const errors = valit.check(data, schema, true)
+const errors = valit.validate(data, schema, true)
+```
+
+The errors will look like this:
+
+```js
+{
+  username: [ 'Username is required' ],
+  age: [ 'Age must be at least 10' ],
+  password1: [ 'Password1 must be a string', 'Password1 must match password2' ]
+}
 ```
 
 
@@ -82,4 +97,4 @@ const errors = valit.check(data, schema, true)
 *   [Github](https://github.com/zeyad-shaban/valit)
 *   [Valit on npmjs](https://www.npmjs.com/package/valit)
 
-If you have any ideas to improve the app feel free to open an issue on the github page.
+If you have any ideas to improve the app or this documentation please open an issue on the github page.
