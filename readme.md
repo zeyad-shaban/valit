@@ -40,11 +40,10 @@ const schema = {
 the first parameter in valit.createField is the data type of that field. __required__
 * ```valit.string``` ```valit.number``` ```valit.boolean``` ```valit.object``` ```valit.function```
 
-the second detremines whether the field is required or not, ___default of false___.
-* ```valit.isRequired``` ```valit.notRequired```
 
 the second parameter is an object of extra options
 * ```required``` ```min``` ```max``` ```label``` ```email``` ```match```
+
 <small>*Note: ```required``` and ```email``` default value is false*</small>
 
 #### 2. Get the data you want to validate
@@ -73,7 +72,9 @@ So in this example errors will look like this
 }
 ```
 
-There is a third parameter for ```valit.validate```:  ```returnAllErrors``` type: boolean, default: false, if set to true it will return all errors found for that field in an array.
+There is a third parameter for ```valit.validate```:  ```returnAllErrors``` type: boolean, default: false.
+
+if set to true it will return all errors found for that field in an array.
 
 so if we did
 
